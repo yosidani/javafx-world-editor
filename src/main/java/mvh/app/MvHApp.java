@@ -19,7 +19,7 @@ public class MvHApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        stage.setTitle("Title");
+        stage.setTitle("Monster vs Heroes World Editor v1.0");
         //Arguments to program
         List<String> args = getParameters().getRaw();
         FXMLLoader fxmlLoader = new FXMLLoader(MvHApp.class.getResource("MvHAppView.fxml"));
