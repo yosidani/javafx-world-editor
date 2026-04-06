@@ -52,8 +52,9 @@ public class MvHAppController {
     private AnchorPane WorldMap;
 
     private void printWorld() {
+        // clean the anchorpane
         WorldMap.getChildren().clear();
-
+        //create grid
         GridPane grid = new GridPane();
         AnchorPane.setTopAnchor(grid, 75.0);
         AnchorPane.setLeftAnchor(grid, 75.0);
@@ -68,7 +69,7 @@ public class MvHAppController {
                 }
                 else {
                     Object entity = world.getEntity(i - 1, j - 1);
-
+                    //identify entity
                     if (entity == null) {
                         symbol = ".";
                     } else if (entity instanceof Wall) {
@@ -81,15 +82,15 @@ public class MvHAppController {
                         symbol = "?";
                     }
                 }
-                    Label cell = new Label(symbol);
-                    cell.setPrefSize(30, 30);
-                    cell.setAlignment(Pos.CENTER);
-                    cell.setStyle("-fx-border-color: black;");
-
-                    grid.add(cell, j, i);
-
+                //add the symbol to a label and then add the label to the grid
+                Label cell = new Label(symbol);
+                cell.setPrefSize(40, 40);
+                cell.setAlignment(Pos.CENTER);
+                cell.setStyle("-fx-border-color: black;");
+                grid.add(cell, j, i);
                 }
             }
+        //add grid to anchorpane
         WorldMap.getChildren().add(grid);
         }
 }
