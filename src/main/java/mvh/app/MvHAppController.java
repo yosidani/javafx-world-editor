@@ -55,7 +55,8 @@ public class MvHAppController {
         WorldMap.getChildren().clear();
 
         GridPane grid = new GridPane();
-
+        AnchorPane.setTopAnchor(grid, 75.0);
+        AnchorPane.setLeftAnchor(grid, 75.0);
 
         int row = world.getRows();
         int col = world.getColumns();
