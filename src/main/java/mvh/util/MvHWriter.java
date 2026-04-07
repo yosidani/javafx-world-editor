@@ -39,7 +39,7 @@ public class MvHWriter {
 
                         } else if (entity instanceof Monster) {
                             Monster mon = (Monster) entity;
-                            line.append(",MONSTER").append(",").append(mon.getSymbol()).append(",").append(mon.getHealth()).append(",").append(mon.getWeaponType());
+                            line.append(",MONSTER").append(",").append(mon.getSymbol()).append(",").append(mon.getHealth()).append(",").append(mon.getWeaponType().toString().charAt(0));
                         }
                     }
                     writer.println(line.toString());
