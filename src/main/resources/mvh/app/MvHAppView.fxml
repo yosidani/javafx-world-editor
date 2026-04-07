@@ -29,7 +29,7 @@
             <MenuItem mnemonicParsing="false" text="Load" onAction="#Load"/>
             <MenuItem mnemonicParsing="false" text="Save" onAction="#Save"/>
             <MenuItem mnemonicParsing="false" text="Save As…" onAction="#SaveAs"/>
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem mnemonicParsing="false" text="Quit" onAction="#Quit"/>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
