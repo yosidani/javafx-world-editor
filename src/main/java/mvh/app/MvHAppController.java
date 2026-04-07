@@ -36,6 +36,8 @@ public class MvHAppController {
     private TextField column;
     @FXML
     private TextField row;
+    @FXML
+    private Button AddWall;
 
     //Has to be run yourself to modify controller data after FXMLLoader .load()
     public void initData(List<String> args) {
@@ -156,13 +158,19 @@ public class MvHAppController {
     private boolean addWallMode = false;
     @FXML
     private void AddWall() {
+        if  (addWallMode) {
+            addWallMode = false;
+            AddWall.setStyle("");
+            return;
+        }
         addWallMode = true;
+        AddWall.setStyle("-fx-border-color: green; -fx-border-width: 2;");
         if (world == null) {
             LeftStatus.setText("No world loaded or created!");
             LeftStatus.setTextFill(Color.RED);
             return;
         }
-        LeftStatus.setText("Click on a cell to add a wall.");
+        LeftStatus.setText("Adding wall! Click on a cell to add a wall.");
         LeftStatus.setTextFill(Color.RED);
     }
 
@@ -215,9 +223,20 @@ public class MvHAppController {
                         return;
                     }
                     //update the world by adding a wall
-                    world.addEntity(r - 1, c-1, Wall.getWall());
-                    //print updated world
-                    printWorld();
+                    if (e.getClickCount() == 2) {
+                        world.addEntity(r - 1, c - 1, null);
+                        printWorld();
+                        LeftStatus.setText("Wall removed!");
+                        LeftStatus.setTextFill(Color.RED);
+                        return;
+                    }
+                    if (addWallMode && e.getClickCount() == 1) {
+                        world.addEntity(r - 1, c - 1, Wall.getWall());
+                        printWorld();
+                        LeftStatus.setText("Wall added!");
+                        LeftStatus.setTextFill(Color.GREEN);
+                    }
+
                 });
                 cell.setPrefSize(40, 40);
                 cell.setAlignment(Pos.CENTER);
