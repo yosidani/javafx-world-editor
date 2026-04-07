@@ -51,7 +51,7 @@
                 <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <Button layoutX="47.0" layoutY="106.0" mnemonicParsing="false" text="Create New World" />
+                  <Button layoutX="47.0" layoutY="106.0" mnemonicParsing="false" text="Create New World" onAction="#Create"/>
                   <Button layoutX="70.0" layoutY="157.0" mnemonicParsing="false" text="Add Wall" />
                   <Button layoutX="69.0" layoutY="207.0" mnemonicParsing="false" text="Add Hero" />
                   <Button layoutX="61.0" layoutY="262.0" mnemonicParsing="false" text="Add Monster" />
@@ -68,8 +68,8 @@
                       <RowConstraints maxHeight="21.4" minHeight="9.399999999999999" prefHeight="18.400003051757814" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField GridPane.rowIndex="1" fx:id="row"/>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="column"/>
                         <Label text="ROW" GridPane.halignment="CENTER" />
                         <Label alignment="CENTER" text="COLUMN" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                      </children>
