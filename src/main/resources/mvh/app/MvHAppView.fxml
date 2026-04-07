@@ -34,7 +34,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MvHMapEditor" />
+            <MenuItem mnemonicParsing="false" text="About MvHMapEditor" onAction="#About"/>
           </items>
         </Menu>
       </menus>
