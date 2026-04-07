@@ -109,6 +109,8 @@ public class MvHAppController {
 
     @FXML
     public void Quit() {
+        LeftStatus.setText("Leaving?");
+        LeftStatus.setTextFill(Color.RED);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Quit");
         alert.setHeaderText("Quit World?");
@@ -117,6 +119,8 @@ public class MvHAppController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             Platform.exit();
         }
+        LeftStatus.setText("You Stayed");
+        LeftStatus.setTextFill(Color.GREEN);
     }
 
     @FXML
