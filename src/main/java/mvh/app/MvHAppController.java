@@ -107,6 +107,18 @@ public class MvHAppController {
         LeftStatus.setTextFill(Color.GREEN);
     }
 
+    @FXML
+    public void Quit() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Quit");
+        alert.setHeaderText("Quit World?");
+        alert.setContentText("Are you sure you want to quit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Platform.exit();
+        }
+    }
+
 
     private void printWorld() {
         // clean the anchorpane
