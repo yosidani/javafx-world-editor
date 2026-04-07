@@ -32,6 +32,10 @@ public class MvHAppController {
     private Label LeftStatus;
     @FXML
     private Label RightStatus;
+    @FXML
+    private TextField column;
+    @FXML
+    private TextField row;
 
     //Has to be run yourself to modify controller data after FXMLLoader .load()
     public void initData(List<String> args) {
@@ -67,7 +71,7 @@ public class MvHAppController {
     @FXML
     public void Save() {
         if (world == null) {
-            LeftStatus.setText("No world loaded!");
+            LeftStatus.setText("No world loaded or created!");
             LeftStatus.setTextFill(Color.RED);
             return;
         }
@@ -85,7 +89,7 @@ public class MvHAppController {
     @FXML
     public void SaveAs() {
         if (world == null) {
-            LeftStatus.setText("No world loaded!");
+            LeftStatus.setText("No world loaded or created!");
             LeftStatus.setTextFill(Color.RED);
             return;
         }
@@ -132,6 +136,22 @@ public class MvHAppController {
         alert.showAndWait();
     }
 
+    @FXML
+    public void Create() {
+        try {
+            int World_columns = Integer.parseInt(column.getText());
+            int World_rows = Integer.parseInt(row.getText());
+            world = new World(World_rows, World_columns);
+        } catch (NumberFormatException e) {
+            LeftStatus.setText("Please enter valid integers in both fields to create a World.");
+            LeftStatus.setTextFill(Color.RED);
+        }
+        printWorld();
+        LeftStatus.setText("World Created!");
+        LeftStatus.setTextFill(Color.GREEN);
+        RightStatus.setText("Showing World.");
+        RightStatus.setTextFill(Color.BLACK);
+    }
 
     private void printWorld() {
         // clean the anchorpane
