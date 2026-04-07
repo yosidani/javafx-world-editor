@@ -25,7 +25,7 @@ public class MvHAppController {
 
     //Store the data of editor
     private World world;
-
+    private File currentFile;
     @FXML
     private AnchorPane WorldMap;
     @FXML
@@ -55,6 +55,8 @@ public class MvHAppController {
         if (file == null) return;
 
         world = MvHReader.loadWorld(file);
+        // remember file after loading
+        currentFile = file;
 
         printWorld();
         LeftStatus.setText("World Loaded");
@@ -69,16 +71,38 @@ public class MvHAppController {
             LeftStatus.setTextFill(Color.RED);
             return;
         }
+        //if no file loaded from earlier, then go to save as
+        if (currentFile == null) {
+            SaveAs();
+            return;
+        }
+        //else save on the currnt file
+        MvHWriter.saveWorld(currentFile, world);
+        LeftStatus.setText("World Saved!");
+        LeftStatus.setTextFill(Color.GREEN);
+    }
+
+    @FXML
+    public void SaveAs() {
+        if (world == null) {
+            LeftStatus.setText("No world loaded!");
+            LeftStatus.setTextFill(Color.RED);
+            return;
+        }
+
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("Save World File");
+        chooser.setTitle("Save World As");
+
         chooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")
         );
-        Stage stage = (Stage) WorldMap.getScene().getWindow();
 
+        Stage stage = (Stage) WorldMap.getScene().getWindow();
         File file = chooser.showSaveDialog(stage);
+
         if (file == null) return;
         MvHWriter.saveWorld(file, world);
+        currentFile = file;
         LeftStatus.setText("World Saved!");
         LeftStatus.setTextFill(Color.GREEN);
     }
