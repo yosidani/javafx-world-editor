@@ -26,6 +26,13 @@ public class MvHAppController {
     //Store the data of editor
     private World world;
 
+    @FXML
+    private AnchorPane WorldMap;
+    @FXML
+    private Label LeftStatus;
+    @FXML
+    private Label RightStatus;
+
     //Has to be run yourself to modify controller data after FXMLLoader .load()
     public void initData(List<String> args) {
     }
@@ -33,6 +40,10 @@ public class MvHAppController {
     //Runs on FXMLLoader .load()
     @FXML
     public void initialize() {
+        LeftStatus.setText("Nothing Currently.");
+        LeftStatus.setTextFill(Color.BLACK);
+        RightStatus.setText("Load or Create a World.");
+        RightStatus.setTextFill(Color.BLACK);
     }
 
     @FXML
@@ -46,10 +57,32 @@ public class MvHAppController {
         world = MvHReader.loadWorld(file);
 
         printWorld();
+        LeftStatus.setText("World Loaded");
+        LeftStatus.setTextFill(Color.GREEN);
+        RightStatus.setText("Showing World.");
+        RightStatus.setTextFill(Color.BLACK);
+    }
+    @FXML
+    public void Save() {
+        if (world == null) {
+            LeftStatus.setText("No world loaded!");
+            LeftStatus.setTextFill(Color.RED);
+            return;
+        }
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Save World File");
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt")
+        );
+        Stage stage = (Stage) WorldMap.getScene().getWindow();
+
+        File file = chooser.showSaveDialog(stage);
+        if (file == null) return;
+        MvHWriter.saveWorld(file, world);
+        LeftStatus.setText("World Saved!");
+        LeftStatus.setTextFill(Color.GREEN);
     }
 
-    @FXML
-    private AnchorPane WorldMap;
 
     private void printWorld() {
         // clean the anchorpane
