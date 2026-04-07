@@ -119,6 +119,15 @@ public class MvHAppController {
         }
     }
 
+    @FXML
+    public void About() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About");
+        alert.setHeaderText("Message");
+        alert.setContentText("This is a World editor/creator for a Monster vs Hero game.\nAuthor: Yosias Demoz\nEmail: yosias.demoz@ucalgary.ca\nVersion: v1.0");
+        alert.showAndWait();
+    }
+
 
     private void printWorld() {
         // clean the anchorpane
