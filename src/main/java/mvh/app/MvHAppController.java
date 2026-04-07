@@ -153,6 +153,19 @@ public class MvHAppController {
         RightStatus.setTextFill(Color.BLACK);
     }
 
+    private boolean addWallMode = false;
+    @FXML
+    private void AddWall() {
+        addWallMode = true;
+        if (world == null) {
+            LeftStatus.setText("No world loaded or created!");
+            LeftStatus.setTextFill(Color.RED);
+            return;
+        }
+        LeftStatus.setText("Click on a cell to add a wall.");
+        LeftStatus.setTextFill(Color.RED);
+    }
+
     private void printWorld() {
         // clean the anchorpane
         WorldMap.getChildren().clear();
@@ -184,11 +197,31 @@ public class MvHAppController {
                         symbol = "?";
                     }
                 }
+                final int r = i;
+                final int c = j;
                 //add the symbol to a label and then add the label to the grid
                 Label cell = new Label(symbol);
+                cell.setOnMouseEntered(e -> {
+                    if (addWallMode) {
+                        cell.setStyle("-fx-border-color: red; -fx-font-size: 22px;");
+                    }
+                });
+                cell.setOnMouseExited(e -> {
+                    cell.setStyle("-fx-border-color: black; -fx-font-size: 18px;");
+                });
+                cell.setOnMouseClicked(e -> {
+                    if (!addWallMode) return;
+                    if (r == 0 || c == 0 || r == row + 1 || c == col + 1) {
+                        return;
+                    }
+                    //update the world by adding a wall
+                    world.addEntity(r - 1, c-1, Wall.getWall());
+                    //print updated world
+                    printWorld();
+                });
                 cell.setPrefSize(40, 40);
                 cell.setAlignment(Pos.CENTER);
-                cell.setStyle("-fx-border-color: black;");
+                cell.setStyle("-fx-border-color: black; -fx-font-size: 18px;");
                 grid.add(cell, j, i);
                 }
             }
