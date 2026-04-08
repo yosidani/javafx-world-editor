@@ -93,8 +93,8 @@ Example world file:
 ### Option 1: Using the class
 
 * C:\Users\yo\OneDrive - Universityof Calgary\CPSC 233 - Assignment 3\target\classes\java --module-path
-* "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules javafx.controls,javafx.fxml
-* mvh.app.MvHApp
+ "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules javafx.controls,javafx.fxml
+  mvh.app.MvHApp
 
 ---
 
