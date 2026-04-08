@@ -100,8 +100,8 @@ Example world file:
 
 ### Option 2: Using the jar file
 
-* C:\Users\yo\OneDrive - University of Calgary\CPSC 233 - Assignment 3\out\artifacts\CPSC_233___Assignment_3\java --module-path "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules
-javafx.controls,javafx.fxml -jar CPSC 233 - Assignment 3.jar
+* C:\Users\yo\OneDrive - University of Calgary\CPSC 233 - Assignment 3\out\artifacts\CPSC233W26A3\java --module-path "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules
+javafx.controls,javafx.fxml -jar CPSC233W26A3.jar
 
 ---
 
