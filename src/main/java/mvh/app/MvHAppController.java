@@ -209,6 +209,11 @@ public class MvHAppController {
     }
 
     private void forStage(AddType type) {
+        if (world == null) {
+            LeftStatus.setText("Please create or load a world first!");
+            LeftStatus.setTextFill(Color.RED);
+            return;
+        }
         try {
             //if the stage doesn't exist yet
             if (stage == null) {
