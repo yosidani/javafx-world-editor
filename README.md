@@ -121,5 +121,5 @@ Example world file:
 
 ## Author
 
-Yosias Demoz
-email - yosias.demoz@ucalgary.ca
+* Yosias Demoz
+* email - yosias.demoz@ucalgary.ca
