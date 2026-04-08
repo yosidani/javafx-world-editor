@@ -42,6 +42,8 @@ public class MvHAppController {
     private Button AddHero;
     @FXML
     private Button AddMonster;
+    @FXML
+    private Label detailsInfoLabel;
 
     //Has to be run yourself to modify controller data after FXMLLoader .load()
     public void initData(List<String> args) {
@@ -175,8 +177,13 @@ public class MvHAppController {
             return;
         }
         addWallMode = true;
+        if (stage != null) {
+            stage.close();
+        }
         addHeroMode = false;
         addMonsterMode = false;
+        AddMonster.setStyle("");
+        AddHero.setStyle("");
         AddWall.setStyle("-fx-border-color: green; -fx-border-width: 2;");
         LeftStatus.setText("Adding wall! Click on a cell to add a wall.");
         LeftStatus.setTextFill(Color.RED);
@@ -191,29 +198,38 @@ public class MvHAppController {
 
     @FXML
     private void AddHero() {
+        if (world == null) {
+            LeftStatus.setText("Please create or load a world first!");
+            LeftStatus.setTextFill(Color.RED);
+            return;
+        }
         forStage(AddType.HERO);
         addHeroMode = true;
         addMonsterMode = false;
         AddMonster.setStyle("");
         addWallMode = false;
         AddWall.setStyle("");
+        LeftStatus.setText("Adding hero.");
+        LeftStatus.setTextFill(Color.BLACK);
     }
     @FXML
     private void AddMonster() {
+        if (world == null) {
+            LeftStatus.setText("Please create or load a world first!");
+            LeftStatus.setTextFill(Color.RED);
+            return;
+        }
         forStage(AddType.MONSTER);
         addMonsterMode = true;
         addWallMode = false;
         AddWall.setStyle("");
         addHeroMode = false;
         AddHero.setStyle("");
+        LeftStatus.setText("Adding monster.");
+        LeftStatus.setTextFill(Color.BLACK);
     }
 
     private void forStage(AddType type) {
-        if (world == null) {
-            LeftStatus.setText("Please create or load a world first!");
-            LeftStatus.setTextFill(Color.RED);
-            return;
-        }
         try {
             //if the stage doesn't exist yet
             if (stage == null) {
@@ -282,6 +298,45 @@ public class MvHAppController {
                 cell.setOnMouseEntered(e -> {
                     if (addWallMode || addHeroMode || addMonsterMode) {
                         cell.setStyle("-fx-border-color: red; -fx-font-size: 22px;");
+                    } else {
+                        cell.setStyle("-fx-border-color: green; -fx-border-width: 1.5px; -fx-font-size: 22px;");
+                    }
+
+                    if (r == 0 || c == 0 || r == row + 1 || c == col + 1) {
+                        detailsInfoLabel.setText("Border Wall\nCannot be removed.");
+                        return;
+                    }
+
+                    // Get the entity at this specific cell
+                    Object entity = world.getEntity(r - 1, c - 1);
+
+                    // Check what the entity is and format the text
+                    if (entity == null) {
+                        detailsInfoLabel.setText("Empty Space");
+                    }
+                    else if (entity instanceof Wall) {
+                        detailsInfoLabel.setText("It is a Wall.");
+                    }
+                    else if (entity instanceof Hero) {
+                        Hero h = (Hero) entity;
+                        // NOTE: Adjust these getter methods to match the ones in your Hero class!
+                        detailsInfoLabel.setText(
+                                "--- HERO ---\n" +
+                                        "Symbol: " + h.getSymbol() + "\n" +
+                                        "Health: " + h.getHealth() + "\n" +
+                                        "Attack: " + h.weaponStrength() + "\n" +
+                                        "Armor: " + h.armourStrength()
+                        );
+                    }
+                    else if (entity instanceof Monster) {
+                        Monster m = (Monster) entity;
+                        // NOTE: Adjust these getter methods to match the ones in your Monster class!
+                        detailsInfoLabel.setText(
+                                "--- MONSTER ---\n" +
+                                        "Symbol: " + m.getSymbol() + "\n" +
+                                        "Health: " + m.getHealth() + "\n" +
+                                        "Weapon: " + m.getWeaponType()
+                        );
                     }
                 });
                 cell.setOnMouseExited(e -> {
