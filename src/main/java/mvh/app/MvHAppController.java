@@ -393,7 +393,8 @@ public class MvHAppController {
                                 "--- MONSTER ---\n" +
                                         "Symbol: " + m.getSymbol() + "\n" +
                                         "Health: " + m.getHealth() + "\n" +
-                                        "Weapon: " + m.getWeaponType()
+                                        "Weapon: " + m.getWeaponType() + "\n" +
+                                        "Weapon Strength: " + m.getWeaponType().getWeaponStrength()
                         );
                     }
                 });
