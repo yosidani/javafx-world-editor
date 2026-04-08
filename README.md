@@ -90,17 +90,24 @@ Example world file:
 
 ## How to Run
 
-### Option 1: With file argument
+### Option 1: Using the class
+
+* C:\Users\yo\OneDrive - Universityof Calgary\CPSC 233 - Assignment 3\target\classes\java --module-path
+* "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules javafx.controls,javafx.fxml
+* mvh.app.MvHApp
 
 ---
 
-### Option 2: Manual load
+### Option 2: Using the jar file
+
+* C:\Users\yo\OneDrive - University of Calgary\CPSC 233 - Assignment 3\out\artifacts\CPSC_233___Assignment_3\java --module-path "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules
+javafx.controls,javafx.fxml -jar CPSC 233 - Assignment 3.jar
 
 ---
 
-### Option 3: Drag and Drop
+### Option 3: Using IDE
 
-* Drag a `.txt` file onto the middle grid area
+* provide command and run in IDE
 
 ---
 
