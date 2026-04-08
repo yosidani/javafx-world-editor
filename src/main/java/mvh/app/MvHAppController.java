@@ -56,6 +56,39 @@ public class MvHAppController {
         LeftStatus.setTextFill(Color.BLACK);
         RightStatus.setText("Load or Create a World.");
         RightStatus.setTextFill(Color.BLACK);
+        WorldMap.setOnDragOver(event -> {
+            // We only care if the drag contains files
+            if (event.getGestureSource() != WorldMap && event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
+        });
+
+        // 2. Handle the "Drop" part
+        WorldMap.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+
+            if (db.hasFiles()) {
+                // Get the first file dropped
+                File file = db.getFiles().get(0);
+
+
+                if (file == null) return;
+
+                world = MvHReader.loadWorld(file);
+                currentFile = file;
+
+                printWorld();
+                LeftStatus.setText("World Loaded by drag and drop");
+                LeftStatus.setTextFill(Color.GREEN);
+                RightStatus.setText("Showing World.");
+                RightStatus.setTextFill(Color.BLACK);
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
     }
 
     @FXML
