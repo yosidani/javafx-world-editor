@@ -27,11 +27,16 @@ import java.util.*;
  * @since April 4, 2026
  */
 
-
+/**
+ * The main controller for the Monster vs Heroes World Editor app.
+ * Manages the world state, grid rendering, file I/O operations, and interaction
+ * between the main map and the popup.
+ */
 public class MvHAppController {
 
     //Store the data of editor
     private World world;
+    // the file reference currently being edited
     private File currentFile;
     @FXML
     private AnchorPane WorldMap;
@@ -52,6 +57,11 @@ public class MvHAppController {
     @FXML
     private Label detailsInfoLabel;
 
+    /**
+     * Initializes the controller with data from command line arguments.
+     * Attempts to load a world file if a path is provided in the execution arguments.
+     * @param args List of raw string arguments from the application launch.
+     */
     //Has to be run yourself to modify controller data after FXMLLoader .load()
     public void initData(List<String> args) {
         //no arguments then do nothing
@@ -80,7 +90,10 @@ public class MvHAppController {
             LeftStatus.setTextFill(Color.RED);
         }
     }
-
+    /**
+     * Called automatically by FXMLLoader after the fxml file has been loaded.
+     * Sets up the initial state and configures Drag and Drop functionality for the WorldMap.
+     */
     //Runs on FXMLLoader .load()
     @FXML
     public void initialize() {
@@ -95,8 +108,7 @@ public class MvHAppController {
             }
             event.consume();
         });
-
-        // 2. Handle the "Drop" part
+        // Handle the "Drop" part
         WorldMap.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;
@@ -104,13 +116,9 @@ public class MvHAppController {
             if (db.hasFiles()) {
                 // Get the first file dropped
                 File file = db.getFiles().get(0);
-
-
                 if (file == null) return;
-
                 world = MvHReader.loadWorld(file);
                 currentFile = file;
-
                 printWorld();
                 LeftStatus.setText("World Loaded by drag and drop");
                 LeftStatus.setTextFill(Color.GREEN);
@@ -123,6 +131,9 @@ public class MvHAppController {
         });
     }
 
+    /**
+     * Opens a FileChooser to select and load an existing world file.
+     */
     @FXML
     public void Load() {
         FileChooser chooser = new FileChooser();
@@ -141,6 +152,11 @@ public class MvHAppController {
         RightStatus.setText("Showing World.");
         RightStatus.setTextFill(Color.BLACK);
     }
+
+    /**
+     * Saves the current world state to the existing file.
+     * If no file is associated, it triggers the SaveAs process.
+     */
     @FXML
     public void Save() {
         if (world == null) {
@@ -159,6 +175,9 @@ public class MvHAppController {
         LeftStatus.setTextFill(Color.GREEN);
     }
 
+    /**
+     * Opens a FileChooser to save the current world state to a new or specific .txt file.
+     */
     @FXML
     public void SaveAs() {
         if (world == null) {
@@ -184,6 +203,9 @@ public class MvHAppController {
         LeftStatus.setTextFill(Color.GREEN);
     }
 
+    /**
+     * Prompts the user for confirmation and exits the application if accepted.
+     */
     @FXML
     public void Quit() {
         LeftStatus.setText("Leaving?");
@@ -200,6 +222,9 @@ public class MvHAppController {
         LeftStatus.setTextFill(Color.GREEN);
     }
 
+    /**
+     * Displays an information alert with application details, author, and version.
+     */
     @FXML
     public void About() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -209,6 +234,9 @@ public class MvHAppController {
         alert.showAndWait();
     }
 
+    /**
+     * Creates a new, empty world based on the dimensions provided in the row and column text fields.
+     */
     @FXML
     public void Create() {
         try {
@@ -229,6 +257,11 @@ public class MvHAppController {
     private boolean addWallMode = false;
     private boolean addHeroMode = false;
     private boolean addMonsterMode = false;
+
+    /**
+     * While active, clicking grid cells adds walls.
+     * Disables other creation modes and closes active entity popups.
+     */
     @FXML
     private void AddWall() {
         if  (addWallMode) {
@@ -254,6 +287,9 @@ public class MvHAppController {
         LeftStatus.setTextFill(Color.RED);
     }
 
+    /**
+     * Enumeration representing the types of entities that can be added via the popup stage.
+     */
     public enum AddType {
         HERO,
         MONSTER
@@ -261,6 +297,9 @@ public class MvHAppController {
     private Stage stage;
     private AddController controller;
 
+    /**
+     * Activates "Hero Mode" and opens the AddView popup for hero configuration.
+     */
     @FXML
     private void AddHero() {
         if (world == null) {
@@ -277,6 +316,9 @@ public class MvHAppController {
         LeftStatus.setText("Adding hero.");
         LeftStatus.setTextFill(Color.BLACK);
     }
+    /**
+     * Activates "Monster Mode" and opens the AddView popup for monster configuration.
+     */
     @FXML
     private void AddMonster() {
         if (world == null) {
@@ -294,6 +336,11 @@ public class MvHAppController {
         LeftStatus.setTextFill(Color.BLACK);
     }
 
+    /**
+     * Manages the lifecycle of the popup stage. Loads the fxml if not already open
+     * and initializes the popup controller with the specified AddType which is the type of the entity added.
+     * @param type The type of entity(HERO/MONSTER) to configure in the popup stage.
+     */
     private void forStage(AddType type) {
         try {
             //if the stage doesn't exist yet
@@ -325,6 +372,11 @@ public class MvHAppController {
         }
     }
 
+    /**
+     * Prints the world grid visually inside the WorldMap middle AnchorPane.
+     * Handles the creation of cell labels and attaches mouse listeners for
+     * hovering (detail displaying) and clicking(remove or add entity).
+     */
     private void printWorld() {
         // clean the anchorpane
         WorldMap.getChildren().clear();

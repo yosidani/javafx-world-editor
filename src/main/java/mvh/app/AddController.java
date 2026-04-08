@@ -25,7 +25,11 @@ import java.util.List;
  * @since April 4, 2026
  */
 
-
+/**
+ * Controller for the AddView popup window.
+ * Manages the state for creating both Hero and Monster entities,
+ * including field visibility and data validation.
+ */
 public class AddController {
 
     @FXML
@@ -47,6 +51,12 @@ public class AddController {
     @FXML
     private ComboBox<String> weaponComboBox;
 
+
+    /**
+     * Adjusts the visibility of fxml elements based on the entity type being added.
+     * Shows armor/attack fields for Heroes and the weapon ComboBox for Monsters.
+     * @param type The type of entity to configure the view for.
+     */
     public void addEntity(AddType type) {
         if (type == AddType.HERO) {
             titleLabel.setText("Hero");
@@ -67,6 +77,10 @@ public class AddController {
         }
     }
 
+    /**
+     * Validates and gets the symbol from the input field.
+     * @return The character in the symbolField, or '?' if the input is empty or invalid.
+     */
     public char getSymbol() {
         if  (symbolField.getText().equals("")) {
             statusLabel.setText("Please enter a symbol.");
@@ -85,6 +99,11 @@ public class AddController {
         symbolField.setStyle("");
         return symbolField.getText().charAt(0);
     }
+
+    /**
+     * Validates that the health input is a valid integer.
+     * @return The health value as a String for parsing, or "?" if invalid.
+     */
     public String getHealth() {
         try {
             Integer.parseInt(healthField.getText());
@@ -100,6 +119,10 @@ public class AddController {
         }
     }
 
+    /**
+     * Validates that the hero's attack strength input is a valid integer.
+     * @return The attack value as a String, or "?" if invalid.
+     */
     public String getHeroAttack() {
         try {
             Integer.parseInt(attackField.getText());
@@ -114,6 +137,11 @@ public class AddController {
             return "?";
         }
     }
+
+    /**
+     * Validates that the hero's armor strength input is a valid integer.
+     * @return The armor value as a String, or "?" if invalid.
+     */
     public String getHeroArmor() {
         try {
             Integer.parseInt(armorField.getText());
@@ -128,6 +156,12 @@ public class AddController {
             return "?";
         }
     }
+
+    /**
+     * Validates that a weapon has been selected from the ComboBox.
+     * @return The first character of the selected weapon string,
+     * or '?' if no selection is made.
+     */
     public char getMonsterWeapon() {
         if (weaponComboBox.getValue() == null) {
             statusLabel.setText("Please enter a weapon.");
