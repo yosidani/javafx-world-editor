@@ -64,6 +64,12 @@ public class AddController {
             statusLabel.setTextFill(Color.RED);
             return '?';
         }
+        if (symbolField.getText().length() > 1){
+            statusLabel.setText("Please enter a single character.");
+            symbolField.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-border-radius: 3px;");
+            statusLabel.setTextFill(Color.RED);
+            return '?';
+        }
         statusLabel.setText("Continue adding.");
         statusLabel.setTextFill(Color.BLACK);
         symbolField.setStyle("");
