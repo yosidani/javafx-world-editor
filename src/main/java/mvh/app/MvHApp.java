@@ -19,14 +19,31 @@ import java.util.*;
  */
 
 
+/**
+ * The main entry point for the Monsters vs Heroes World Editor.
+ * Handles the initialization of the JavaFX and sets up the primary stage.
+ */
 public class MvHApp extends Application {
 
+    /**
+     * The current version of the application.
+     */
     public static final String version = "1.0";
 
+    /**
+     * Standard main method to launch app.
+     * @param args command line arguments passed to the program.
+     */
     static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Initializes the primary stage, loads the fxml view, and sets up the controller.
+     * Also configures a shutdown to ensure all processes stop when the window is closed.
+     * @param stage the primary stage.
+     * @throws IOException if the fxml cannot be loaded.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Monster vs Heroes World Editor v1.0");
@@ -44,5 +61,4 @@ public class MvHApp extends Application {
             System.exit(0);
         });
     }
-
 }
