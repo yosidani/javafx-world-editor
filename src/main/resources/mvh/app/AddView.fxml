@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mvh.app.AddController"
-            prefHeight="400.0" prefWidth="600.0">
-</AnchorPane>
+<VBox spacing="10" alignment="TOP_LEFT" xmlns:fx="http://javafx.com/fxml" fx:controller="mvh.app.AddController"  prefWidth="250" prefHeight="220"  style="-fx-padding: 15;">
+    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <VBox spacing="3">
+        <Label text="Symbol" />
+        <TextField/>
+    </VBox>
+    <VBox spacing="3">
+        <Label text="Health" />
+        <TextField  promptText="10" />
+    </VBox>
+    <VBox fx:id="heroBox" spacing="3">
+        <Label text="Weapon" />
+        <TextField />
+
+        <Label text="Armor" />
+        <TextField />
+    </VBox>
+    <VBox spacing="3">
+        <Label text="Weapon" />
+        <ComboBox>
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Sword (4)" />
+                    <String fx:value="Axe (3)" />
+                    <String fx:value="Club (2)" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </VBox>
+    <Label text="Added a new monster/hero!" />
+
+</VBox>
