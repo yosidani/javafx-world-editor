@@ -47,6 +47,31 @@ public class MvHAppController {
 
     //Has to be run yourself to modify controller data after FXMLLoader .load()
     public void initData(List<String> args) {
+        //no arguments then do nothing
+        if (args == null || args.size() == 0) {
+            return;
+        }
+        try {
+            // get filename from run configuration
+            String filename = args.get(0);
+            File file = new File(filename);
+            if (!file.exists()) {
+                LeftStatus.setText("File not found: " + filename);
+                LeftStatus.setTextFill(Color.RED);
+                return;
+            }
+            // load world
+            world = MvHReader.loadWorld(file);
+            currentFile = file;
+            printWorld();
+            LeftStatus.setText("World Loaded from argument");
+            LeftStatus.setTextFill(Color.GREEN);
+            RightStatus.setText("Showing World.");
+            RightStatus.setTextFill(Color.BLACK);
+        } catch (Exception e) {
+            LeftStatus.setText("Failed to load file from argument");
+            LeftStatus.setTextFill(Color.RED);
+        }
     }
 
     //Runs on FXMLLoader .load()
