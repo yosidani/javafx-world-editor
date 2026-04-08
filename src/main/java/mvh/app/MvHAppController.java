@@ -38,6 +38,10 @@ public class MvHAppController {
     private TextField row;
     @FXML
     private Button AddWall;
+    @FXML
+    private Button AddHero;
+    @FXML
+    private Button AddMonster;
 
     //Has to be run yourself to modify controller data after FXMLLoader .load()
     public void initData(List<String> args) {
@@ -156,6 +160,8 @@ public class MvHAppController {
     }
 
     private boolean addWallMode = false;
+    private boolean addHeroMode = false;
+    private boolean addMonsterMode = false;
     @FXML
     private void AddWall() {
         if  (addWallMode) {
@@ -169,6 +175,8 @@ public class MvHAppController {
             return;
         }
         addWallMode = true;
+        addHeroMode = false;
+        addMonsterMode = false;
         AddWall.setStyle("-fx-border-color: green; -fx-border-width: 2;");
         LeftStatus.setText("Adding wall! Click on a cell to add a wall.");
         LeftStatus.setTextFill(Color.RED);
@@ -184,10 +192,20 @@ public class MvHAppController {
     @FXML
     private void AddHero() {
         forStage(AddType.HERO);
+        addHeroMode = true;
+        addMonsterMode = false;
+        AddMonster.setStyle("");
+        addWallMode = false;
+        AddWall.setStyle("");
     }
     @FXML
     private void AddMonster() {
         forStage(AddType.MONSTER);
+        addMonsterMode = true;
+        addWallMode = false;
+        AddWall.setStyle("");
+        addHeroMode = false;
+        AddHero.setStyle("");
     }
 
     private void forStage(AddType type) {
@@ -206,6 +224,11 @@ public class MvHAppController {
             }
             controller.addEntity(type);
             stage.setTitle("Add " + (type == AddType.HERO ? "Hero" : "Monster"));
+            if (type == AddType.MONSTER) {
+                AddMonster.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+            } else if (type == AddType.HERO) {
+                AddHero.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+            }
             if (!stage.isShowing()) {
                 stage.show();
             } else {
@@ -240,11 +263,11 @@ public class MvHAppController {
                     } else if (entity instanceof Wall) {
                         symbol = "#";
                     } else if (entity instanceof Monster && ((Monster) entity).isAlive()) {
-                        symbol = "M";
+                        symbol = String.valueOf(((Monster) entity).getSymbol());
                     } else if (entity instanceof Hero && ((Hero) entity).isAlive()) {
-                        symbol = "H";
+                        symbol = String.valueOf(((Hero) entity).getSymbol());
                     } else {
-                        symbol = "?";
+                        symbol = "$";
                     }
                 }
                 final int r = i;
@@ -252,7 +275,7 @@ public class MvHAppController {
                 //add the symbol to a label and then add the label to the grid
                 Label cell = new Label(symbol);
                 cell.setOnMouseEntered(e -> {
-                    if (addWallMode) {
+                    if (addWallMode || addHeroMode || addMonsterMode) {
                         cell.setStyle("-fx-border-color: red; -fx-font-size: 22px;");
                     }
                 });
@@ -260,25 +283,92 @@ public class MvHAppController {
                     cell.setStyle("-fx-border-color: black; -fx-font-size: 18px;");
                 });
                 cell.setOnMouseClicked(e -> {
-                    if (!addWallMode) return;
-                    if (r == 0 || c == 0 || r == row + 1 || c == col + 1) {
-                        return;
-                    }
-                    //update the world by adding a wall
                     if (e.getClickCount() == 2) {
+                        if (r == 0 || c == 0 || r == row + 1 || c == col + 1) return;
+                        if(world.isHero(r - 1, c - 1)){
+                            LeftStatus.setText("Hero removed!");
+                            LeftStatus.setTextFill(Color.RED);
+                        } else if(world.isMonster(r - 1, c - 1)){
+                            LeftStatus.setText("Monster removed!");
+                            LeftStatus.setTextFill(Color.RED);
+                        }else {
+                            LeftStatus.setText("Wall removed!");
+                            LeftStatus.setTextFill(Color.RED);
+                        }
                         world.addEntity(r - 1, c - 1, null);
                         printWorld();
-                        LeftStatus.setText("Wall removed!");
-                        LeftStatus.setTextFill(Color.RED);
                         return;
                     }
-                    if (addWallMode && e.getClickCount() == 1) {
-                        world.addEntity(r - 1, c - 1, Wall.getWall());
+
+                    if (e.getClickCount() == 1) {
+                        if (r == 0 || c == 0 || r == row + 1 || c == col + 1) return;
+
+                        if (addWallMode) {
+                            world.addEntity(r - 1, c - 1, Wall.getWall());
+                            LeftStatus.setText("Wall added!");
+                        }
+                        else if (addHeroMode && controller != null) {
+                            // data from stage
+                            if (controller.getSymbol() == '?'){
+                                LeftStatus.setText("Please enter a symbol.");
+                                LeftStatus.setTextFill(Color.RED);
+                                return;
+                            }
+                            char HeroSymbol = controller.getSymbol();
+                            if (controller.getHealth() == "?"){
+                                LeftStatus.setText("Please enter valid Health.");
+                                LeftStatus.setTextFill(Color.RED);
+                                return;
+                            }
+                            int health = Integer.parseInt(controller.getHealth());
+                            if (controller.getHeroAttack() == "?"){
+                                LeftStatus.setText("Please enter valid attack strength.");
+                                LeftStatus.setTextFill(Color.RED);
+                                return;
+                            }
+                            int weapon = Integer.parseInt(controller.getHeroAttack());
+                            if (controller.getHeroArmor() == "?"){
+                                LeftStatus.setText("Please enter valid armor strength.");
+                                LeftStatus.setTextFill(Color.RED);
+                                return;
+                            }
+                            int armor = Integer.parseInt(controller.getHeroArmor());
+                            // create hero
+                            Hero h = new Hero(HeroSymbol, health, weapon, armor);
+                            world.addEntity(r - 1, c - 1, h);
+                            LeftStatus.setText("Hero added!");
+                        }
+                        else if (addMonsterMode && controller != null) {
+                            // data from stage
+                            if (controller.getSymbol() == '?'){
+                                LeftStatus.setText("Please enter a symbol.");
+                                LeftStatus.setTextFill(Color.RED);
+                                return;
+                            }
+                            char MonsterSymbol = controller.getSymbol();
+                            if (controller.getHealth() == "?"){
+                                LeftStatus.setText("Please enter valid Health.");
+                                LeftStatus.setTextFill(Color.RED);
+                                return;
+                            }
+                            int health = Integer.parseInt(controller.getHealth());
+                            if (controller.getMonsterWeapon() == '?'){
+                                LeftStatus.setText("Please enter a weapon.");
+                                LeftStatus.setTextFill(Color.RED);
+                                return;
+                            }
+                            WeaponType weapon = WeaponType.getWeaponType(controller.getMonsterWeapon());
+
+                            // create monster
+                            Monster m = new Monster(MonsterSymbol, health, weapon);
+                            world.addEntity(r - 1, c - 1, m);
+
+                            LeftStatus.setText("Monster added!");
+                        }
+
                         printWorld();
-                        LeftStatus.setText("Wall added!");
                         LeftStatus.setTextFill(Color.GREEN);
                     }
-
                 });
                 cell.setPrefSize(40, 40);
                 cell.setAlignment(Pos.CENTER);
