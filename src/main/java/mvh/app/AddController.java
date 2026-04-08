@@ -16,6 +16,16 @@ import mvh.app.MvHAppController.AddType;
 import java.io.IOException;
 import java.util.List;
 
+
+/**
+ * UCID: 30283151
+ * Tutorial: T-14
+ * @author Yosias Demoz
+ * @email yosias.demoz@ucalgary.ca
+ * @since April 4, 2026
+ */
+
+
 public class AddController {
 
     @FXML

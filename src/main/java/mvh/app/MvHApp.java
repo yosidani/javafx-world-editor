@@ -9,6 +9,16 @@ import javafx.stage.*;
 import java.io.*;
 import java.util.*;
 
+
+/**
+ * UCID: 30283151
+ * Tutorial: T-14
+ * @author Yosias Demoz
+ * @email yosias.demoz@ucalgary.ca
+ * @since April 4, 2026
+ */
+
+
 public class MvHApp extends Application {
 
     public static final String version = "1.0";

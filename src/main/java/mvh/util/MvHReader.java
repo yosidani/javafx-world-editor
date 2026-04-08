@@ -6,6 +6,17 @@ import mvh.enums.*;
 import java.io.*;
 import java.util.*;
 
+
+
+/**
+ * UCID: 30283151
+ * Tutorial: T-14
+ * @author Yosias Demoz
+ * @email yosias.demoz@ucalgary.ca
+ * @since April 4, 2026
+ */
+
+
 /**
  * Class to assist reading in world file
  *

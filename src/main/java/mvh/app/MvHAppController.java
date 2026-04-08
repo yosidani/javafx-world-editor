@@ -16,9 +16,16 @@ import javafx.stage.*;
 import mvh.enums.*;
 import mvh.util.*;
 import mvh.world.*;
-
 import java.io.*;
 import java.util.*;
+
+/**
+ * UCID: 30283151
+ * Tutorial: T-14
+ * @author Yosias Demoz
+ * @email yosias.demoz@ucalgary.ca
+ * @since April 4, 2026
+ */
 
 
 public class MvHAppController {

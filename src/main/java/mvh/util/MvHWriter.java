@@ -7,11 +7,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
+/**
+ * UCID: 30283151
+ * Tutorial: T-14
+ * @author Yosias Demoz
+ * @email yosias.demoz@ucalgary.ca
+ * @since April 4, 2026
+ */
+
+
 /**
  * Class to assist writing a .txt file from the world
- *
- * @author Yosias Demoz
- * @version 1.0
  */
 public class MvHWriter {
     /**
