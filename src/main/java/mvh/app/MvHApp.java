@@ -28,6 +28,11 @@ public class MvHApp extends Application {
         controller.initData(args);
         stage.setScene(scene);
         stage.show();
+        //if main closed then close everthing
+        stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
 }
