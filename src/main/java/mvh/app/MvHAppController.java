@@ -163,15 +163,57 @@ public class MvHAppController {
             AddWall.setStyle("");
             return;
         }
-        addWallMode = true;
-        AddWall.setStyle("-fx-border-color: green; -fx-border-width: 2;");
         if (world == null) {
             LeftStatus.setText("No world loaded or created!");
             LeftStatus.setTextFill(Color.RED);
             return;
         }
+        addWallMode = true;
+        AddWall.setStyle("-fx-border-color: green; -fx-border-width: 2;");
         LeftStatus.setText("Adding wall! Click on a cell to add a wall.");
         LeftStatus.setTextFill(Color.RED);
+    }
+
+    public enum AddType {
+        HERO,
+        MONSTER
+    }
+    private Stage stage;
+    private AddController controller;
+
+    @FXML
+    private void AddHero() {
+        forStage(AddType.HERO);
+    }
+    @FXML
+    private void AddMonster() {
+        forStage(AddType.MONSTER);
+    }
+
+    private void forStage(AddType type) {
+        try {
+            //if the stage doesn't exist yet
+            if (stage == null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AddView.fxml"));
+                Parent root = loader.load();
+                controller = loader.getController();
+                stage = new Stage();
+                stage.setScene(new Scene(root));
+                // if stage closed null
+                stage.setOnCloseRequest(e -> {
+                    stage = null;
+                });
+            }
+            controller.addEntity(type);
+            stage.setTitle("Add " + (type == AddType.HERO ? "Hero" : "Monster"));
+            if (!stage.isShowing()) {
+                stage.show();
+            } else {
+                stage.toFront();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void printWorld() {
