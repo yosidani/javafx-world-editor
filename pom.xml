@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>mvh</groupId>
-    <artifactId>CPSC233W26A3</artifactId>
+    <artifactId>MvH</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>CPSC233W26A3</name>
+    <name>MvH</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

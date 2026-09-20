@@ -87,13 +87,13 @@ public final class Monster extends Entity {
         return super.toString() + "\t" + weaponType;
     }
 
-    //TODO: chooseMove (not your job for A3)
+    //chooseMove
     @Override
     public Direction chooseMove(World local) {
         return Direction.STAY;
     }
 
-    //TODO: attackWhere (not your job for A3)
+    //attackWhere
     @Override
     public Direction attackWhere(World local) {
         return Direction.STAY;

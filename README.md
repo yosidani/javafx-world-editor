@@ -1,71 +1,53 @@
-# Monsters vs Heroes (MvH) World Editor
+# Monsters vs. Heroes (MvH) World Editor
 
-## Overview
+A JavaFX-based graphical application for creating, editing, and managing a 2D grid world containing Heroes, Monsters, and Walls. This tool allows users to visually construct game environments and serialize the data to text files for game engine loading.
 
-This is a JavaFX-based graphical application for creating, editing, and managing a world containing Heroes, Monsters, and Walls.
-
-Users can:
-
-* Load an existing world from a `.txt` file
-* Create and modify the world visually
-* Add or remove entities dynamically
-* Save changes back to a file
+## Technical tools
+* **Language:** Java 25
+* **Framework:** JavaFX 25
+* **Tools:** SceneBuilder 25, Git
 
 ---
 
 ## Features
 
 ### World Management
+* **Load:** Import an existing world grid from a `.txt` file.
+* **Save / Save As:** Export world modifications to existing or new files.
+* **Session Management:** Safely quit the application with active state handling.
 
-* Load world from file
-* Save world to existing file
-* Save As to a new file
-* Quit application safely
+### Interactive Grid Editor
+* Displays the world map as a dynamic visual grid.
+* Map borders are automatically rendered as unpathable walls (`#`).
+* **Left-Click:** Place a selected entity (Hero, Monster, or Wall) onto a tile.
+* **Double-Click:** Remove an entity from a tile (resets to empty).
+* **Modal Constraints:** Ensures only one configuration pop-up is active at a time.
 
-### Grid Editor
-
-* Displays world as a grid
-* Borders are automatically rendered as walls (`#`)
-* Click interactions:
-
-  * **Single click** → place entity (based on active mode)
-  * **Double click** → remove entity (set to null)
-
----
-
-## Hero & Monster Creation
-
-When selecting:
-
-* **Add Hero**
-* **Add Monster**
-
-A popup window appears allowing configuration.
-
-### Hero Inputs
-
-* Symbol (char)
-* Health (int)
-* Attack (int)
-* Armor (int)
-
-### Monster Inputs
-
-* Symbol (char)
-* Health (int)
-* Weapon Type:
-
-  * Sword (S)
-  * Axe (A)
-  * Club (C)
+### Entity Configuration
+When placing a new Hero or Monster, a configuration window prompts for specific stats:
+* **Heroes:** Symbol (char), Health (int), Attack (int), Armor (int)
+* **Monsters:** Symbol (char), Health (int), Weapon Type (Sword [S], Axe [A], or Club [C])
 
 ---
 
-## File Format
+## How to Run
 
-Example world file:
+### Running via IDE (IntelliJ IDEA / Eclipse)
+1. Clone this repository to your local machine.
+2. Open the project folder in your preferred Java IDE.
+3. Ensure **Java 25** and **JavaFX 25** are configured in your Project Structure/Build Path.
+4. If using VM options for JavaFX, add: 
+   `--module-path /path/to/javafx/lib --add-modules javafx.controls,javafx.fxml`
+5. Locate the main application class `MvHApp.java` and click **Run**.
 
-```
+---
+
+## File Format Architecture
+
+The editor serializes the world into a custom `.txt` format. Invalid inputs are automatically rejected by the parser.
+
+**Example File Structure:**
+```text
 3
 3
 0,0,MONSTER,M,10,S
@@ -79,54 +61,13 @@ Example world file:
 2,2,HERO,H,10,3,1
 ```
 
-### Format Rules
+**Parsing Rules:**
+* `row,col` → Empty tile
+* `row,col,WALL` → Wall block
+* `row,col,MONSTER,symbol,health,weapon` → Monster entity
+* `row,col,HERO,symbol,health,attack,armor` → Hero entity
 
-  * `row,col` → empty
-  * `row,col,WALL`
-  * `row,col,MONSTER,symbol,health,weapon`
-  * `row,col,HERO,symbol,health,attack,armor`
-
----
-
-## How to Run
-
-### Option 1: Using the class
-
-* C:\Users\yo\OneDrive - Universityof Calgary\CPSC 233 - Assignment 3\target\classes\java --module-path
- "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules javafx.controls,javafx.fxml
-  mvh.app.MvHApp
-
----
-
-### Option 2: Using the jar file
-
-* C:\Users\yo\OneDrive - University of Calgary\CPSC 233 - Assignment 3\out\artifacts\CPSC233W26A3\java --module-path "C:\Program Files\Java\javafx-sdk-26\lib" --add-modules
-javafx.controls,javafx.fxml -jar CPSC233W26A3.jar
-
----
-
-### Option 3: Using IDE
-
-* provide command and run in IDE
-
----
-
-## Notes
-
-* Grid automatically includes boundary walls
-* Invalid inputs may be ignored or rejected
-* Only one popup can be active at a time (modal behavior)
-
----
-
-## Technical tools
-
-* JavaFX 25
-* Java 25
-* Git
-* Scenebuilder 25
-
-## Author
+## Authors
 
 * Yosias Demoz
-* email - yosias.demoz@ucalgary.ca
+* Jonathan Hudson

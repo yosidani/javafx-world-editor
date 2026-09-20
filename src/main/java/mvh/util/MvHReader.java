@@ -9,10 +9,7 @@ import java.util.*;
 
 
 /**
- * UCID: 30283151
- * Tutorial: T-14
  * @author Yosias Demoz
- * @email yosias.demoz@ucalgary.ca
  * @since April 4, 2026
  */
 

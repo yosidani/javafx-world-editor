@@ -83,7 +83,6 @@ public class World {
      * @return World of given size centred around given location
      */
     public World getLocal(int size, int centreRow, int centreColumn) {
-        //TODO: Finish
         return null;
     }
 
@@ -150,7 +149,7 @@ public class World {
      * Check if simulation has now ended (only one of two versus Entity types is alive
      */
     private void checkActive() {
-        //TODO: checkActive
+    
     }
 
     /**
@@ -315,7 +314,6 @@ public class World {
      * @return String version of the world, '#' for walls, '.' for empty floor, '$' for dead entities
      */
     public String worldString() {
-        //TODO: Finish
         return "worldString";
     }
 
@@ -326,7 +324,6 @@ public class World {
      * @return String version of the game
      */
     public String gameString() {
-        //TODO: Finish
         return "gameString";
     }
 
